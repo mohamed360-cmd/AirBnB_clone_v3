@@ -1,7 +1,11 @@
--- prepares a MySQL server for the project
+#!/usr/bin/python3
+""" Test .get() and .count() methods
+"""
+from models import storage
+from models.state import State
 
-CREATE DATABASE IF NOT EXISTS hbnb_test_db;
-CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_test_pwd';
-GRANT ALL PRIVILEGES ON `hbnb_test_db`.* TO 'hbnb_test'@'localhost';
-GRANT SELECT ON `performance_schema`.* TO 'hbnb_test'@'localhost';
-FLUSH PRIVILEGES;
+print("All objects: {}".format(storage.count()))
+print("State objects: {}".format(storage.count(State)))
+
+first_state_id = list(storage.all(State).values())[0].id
+print("First state: {}".format(storage.get(State, first_state_id)))
